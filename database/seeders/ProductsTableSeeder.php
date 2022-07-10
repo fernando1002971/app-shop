@@ -18,10 +18,34 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        //make crea objeto mientras create además los ejecuta en la
-        //base de datos
-     Category::factory(5)->create(); 
-     Product::factory(100)->create(); 
-     ProductImage::factory(200)->create(); 
+     
+        //primero creamos las categorias
+        $categories = Category::factory(5)->create();
+
+        //por cada categoria creada, ejecutamos la siguiente función
+        $categories->each(function ($category) {
+            //por cada categoria solicitamos la creación de 20 productos
+            $products = Product::factory(20)->make();
+            //y guardamos esa relación
+            $category->products()->saveMany($products);
+
+             //Ahora vamos a hacer que cada producto tenga 5 imágenes
+             //iterando sobre los productos:
+             $products->each(function ($p){
+               $images= ProductImage::factory(5)->make(); 
+                $p->images()->saveMany($images);
+             });
+
+        });
+
+      
+
+
+
+        //  Category::factory(5)->create(); 
+
+
+        //  
+        //  ProductImage::factory(200)->create(); 
     }
 }
