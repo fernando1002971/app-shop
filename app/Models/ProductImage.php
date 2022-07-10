@@ -8,7 +8,7 @@ use App\Models\Product;
 class ProductImage extends Model
 {
     use HasFactory;
-    public function product(){
+    public function product(){     
         //Una  serie de imagenes pertenecen a un producto determinado
         return $this->belongsTo(Product::class);
 
